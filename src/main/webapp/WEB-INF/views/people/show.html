@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Human</title>
+    <meta charset="UTF-8">
+    <title>Human</title>
 </head>
 <body>
 <p th:text="${people.getFullName() + ', ' + people.getYearOfBirth()}">Name</p>
 <hr/>
 <div th:if="${books.isEmpty()}">
-  <p>Человек пока не взял ни одной книги</p>
+    <p>Человек пока не взял ни одной книги</p>
 </div>
 
 <div th:if="${!books.isEmpty()}">
-  <b> Книги: </b>
-  <br/>
-  <table th:each="book : ${books}">
-    <div th:if="${book.}">
-
-    </div>
-    <a th:text = "${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getPublishYear()}">Books List</a>
-  </table>
+    <b> Книги: </b>
+    <br/>
+    <table th:each="book : ${books}">
+        <tr>
+            <td>
+        <span th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getPublishYear()}"
+              th:style="${book.isOverdue()} ? 'color : red' : 'color: black'">
+            Books List
+        </span>
+            </td>
+        </tr>
+    </table>
 </div>
 <hr/>
 <form th:action="@{/people/{id}/edit(id=${people.getPeople_id()})}">
-  <input type="submit" value="Редактировать!">
+    <input type="submit" value="Редактировать!">
 </form>
 <br/>
 <form th:method="DELETE" th:action="@{/people/{id}(id=${people.getPeople_id()})}">
-  <input type="submit" value="Удалить"/>
+    <input type="submit" value="Удалить"/>
 </form>
 </body>
 </html>

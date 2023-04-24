@@ -7,6 +7,7 @@ import ru.hibernateProject.models.Book;
 import ru.hibernateProject.models.People;
 import ru.hibernateProject.repositories.PeopleRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,11 @@ public class PeopleService {
     }
 
     public List<Book> showBook(int id){
-        return peopleRepository.findBookByPeople_id(id);
+        List<Book> bookList = peopleRepository.findBookByPeople_id(id);
+        for(Book book : bookList){
+            long diffTime =  Math.abs(new Date().getTime() - book.getDateOfIssue().getTime());
+            if(diffTime>864_000_000L) book.setOverdue(true);
+        }
+        return bookList;
     }
 }
